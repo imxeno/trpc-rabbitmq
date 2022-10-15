@@ -32,7 +32,7 @@ import type { AppRouter } from './appRouter';
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     rmqLink({
-      url: "amqp://localhost:5432",
+      url: "amqp://localhost",
       queue: "app"
     })
   ],
@@ -47,7 +47,7 @@ import { createRMQHandler } from 'trpc-rabbitmq/adapter';
 import { appRouter } from './appRouter';
 
 createRMQHandler({ 
-  url: "amqp://localhost:5432",
+  url: "amqp://localhost",
   queue: "app",
   router: appRouter
 });
