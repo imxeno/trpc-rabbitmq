@@ -1,0 +1,7 @@
+*
+!adapter/**/*
+!link/**/*
+!types/**/*
+!package.json
+!package-lock.json
+!LICENSE
