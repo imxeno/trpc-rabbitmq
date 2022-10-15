@@ -4,7 +4,6 @@ import { observable } from '@trpc/server/observable';
 import * as amqp from 'amqp-connection-manager';
 import { randomUUID } from 'crypto';
 import EventEmitter from 'events';
-import { parse, stringify } from 'superjson';
 
 import type { TRPCRMQRequest, TRPCRMQResponse } from '../types';
 
@@ -32,7 +31,7 @@ export const rmqLink = <TRouter extends AnyRouter>(opts: TRPCRMQLinkOptions): TR
             if (!msg) return;
             responseEmitter.emit(
               msg.properties.correlationId as string,
-              parse(msg.content.toString('utf-8'))
+              JSON.parse(msg.content.toString('utf-8'))
             );
           },
           { noAck: true }
@@ -44,7 +43,7 @@ export const rmqLink = <TRouter extends AnyRouter>(opts: TRPCRMQLinkOptions): TR
       new Promise<any>(resolve => {
         const correlationId = randomUUID();
         responseEmitter.once(correlationId, resolve);
-        void channel.sendToQueue(queue, Buffer.from(stringify(message)), {
+        void channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), {
           correlationId,
           replyTo: REPLY_QUEUE
         });

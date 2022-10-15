@@ -8,7 +8,6 @@ import {
 import type { OnErrorFunction } from '@trpc/server/dist/internals/types';
 import * as amqp from 'amqp-connection-manager';
 import type { ConsumeMessage } from 'amqplib';
-import { parse, stringify } from 'superjson';
 
 import { getErrorFromUnknown } from './errors';
 
@@ -42,7 +41,7 @@ export const createRMQHandler = <TRouter extends AnyRouter>(
         if (!correlationId || !replyTo) return;
         const res = await handleMessage(router, msg, onError);
         if (!res) return;
-        void channel.sendToQueue(replyTo as string, Buffer.from(stringify({ trpc: res })), {
+        void channel.sendToQueue(replyTo as string, Buffer.from(JSON.stringify({ trpc: res })), {
           correlationId: correlationId as string
         });
       });
@@ -60,7 +59,7 @@ async function handleMessage<TRouter extends AnyRouter>(
   const { transformer } = router._def._config;
 
   try {
-    const message: any = parse(msg.content.toString('utf-8'));
+    const message = JSON.parse(msg.content.toString('utf-8'));
     if (!('trpc' in message)) return;
     const { trpc } = message;
     if (!('id' in trpc) || trpc.id === null || trpc.id === undefined) return;

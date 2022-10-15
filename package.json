@@ -18,8 +18,8 @@
     "build": "rimraf dist && rimraf adapter && rimraf link && rimraf types && tsc -p tsconfig.build.json && shx mv dist/* . && rimraf dist"
   },
   "peerDependencies": {
-    "@trpc/client": "^10.0.0-proxy-beta.18",
-    "@trpc/server": "^10.0.0-proxy-beta.18"
+    "@trpc/client": "10.0.0-proxy-beta.18",
+    "@trpc/server": "10.0.0-proxy-beta.18"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
