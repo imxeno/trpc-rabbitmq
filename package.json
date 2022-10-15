@@ -1,6 +1,6 @@
 {
   "name": "trpc-rabbitmq",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "tRPC adapter for RabbitMQ",
   "author": "Piotr Adamczyk <xeno@xeno.yt>",
   "license": "MIT",
