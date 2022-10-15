@@ -13,6 +13,7 @@
   "repository": "github:imxeno/trpc-rabbitmq",
   "bugs": "https://github.com/imxeno/trpc-rabbitmq/issues",
   "scripts": {
+    "prepublish": "npm run build",
     "test": "tsc --noEmit && jest --verbose --passWithNoTests",
     "build": "rimraf dist && rimraf adapter && rimraf link && rimraf types && tsc -p tsconfig.build.json && shx mv dist/* . && rimraf dist"
   },
